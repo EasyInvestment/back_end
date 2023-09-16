@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'user' # 앱 네임스페이스 설정
+app_name = 'users' # 앱 네임스페이스 설정
 
 urlpatterns = [
   path("login", views.login_view, name="login"),

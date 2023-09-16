@@ -4,4 +4,4 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-  user_id = models.CharField(max_length=10)
+  phone = models.CharField(max_length=20, blank=True, null=True)
