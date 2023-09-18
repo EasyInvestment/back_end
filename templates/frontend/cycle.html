@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>챗봇</title>
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <a href="category.html">
+        <img class="back" src="/images/backbutton.png"
+        style="width: 90px; height: 40px;" />
+
+    </a>
+    <hr>
+    <div id="chat-container">
+        <div id="chat-log"></div>
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const OPENAI_API_KEY = '';
+        const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            document.getElementById('user-input').value = '';
+
+            appendMessage('User', userInput);
+
+            $.ajax({
+                type: 'POST',
+                url: API_ENDPOINT,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${OPENAI_API_KEY}`
+                },
+                data: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [{ role: 'user', content: userInput }]
+                }),
+                success: function (response) {
+                    const botMessage = response.choices[0].message.content;
+                    appendMessage('ChatGPT', botMessage);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function appendMessage(sender, message) {
+            const chatLog = document.getElementById('chat-log');
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+
+            messageElement.classList.add(sender === 'User' ? 'user-message' : 'bot-message');
+
+            chatLog.appendChild(messageElement);
+        }
+    </script>
+</body>
+</html>
