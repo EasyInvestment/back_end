@@ -19,5 +19,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('users.urls', namespace='user')),  # 'users'라는 네임스페이스 설정
+    path('auth/', include('users.urls', namespace='user')),  # 'users'라는 네임스페이스 
+    path('recommendation/', include('recommendation_app.urls')),
 ]
