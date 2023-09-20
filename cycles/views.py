@@ -1,3 +1,8 @@
-from django.shortcuts import render
+# cycles/views.py
 
-# Create your views here.
+from django.shortcuts import render
+from .models import IndustryCycle
+
+def industry_cycles_view(request):
+    data = IndustryCycle.objects.all()
+    return render(request, 'cycle.html', {'data': data})

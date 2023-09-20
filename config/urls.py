@@ -17,8 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from cycles import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('users.urls', namespace='user')),  # 'users'라는 네임스페이스 
     path('recommendation/', include('recommendation_app.urls')),
+    path('cycles/', include('cycles.urls')),
+
 ]

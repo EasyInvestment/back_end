@@ -13,5 +13,13 @@
 
     </a>
     <hr>
+
+    <!-- 데이터 받아옴 -->
+    <ul>
+        {% for item in data %}
+            <li>{{ item.industry_name }} ({{ item.year }}): {{ item.cycle_category }}</li>
+        {% endfor %}
+    </ul>
+
 </body>
 </html>
