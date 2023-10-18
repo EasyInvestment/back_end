@@ -11,7 +11,7 @@
 <body>
     <section class="login-form">
         <h1>Login</h1>
-        <form action="" method="">
+        <form action="{% url 'user:login' %}" method="post">
          
             <div class="int-area">
                 <input type="text" name="id" id="id"
@@ -33,7 +33,7 @@
                 </div>
             <div class="caption">
                 <a href="">Forgot Password?</a>
-                <a href="/html/signup.html" id="no-account">Signup</a>
+                <a href="/templates/frontend/html/signup.html" id="no-account">Signup</a>
             </div>
         
         </form>

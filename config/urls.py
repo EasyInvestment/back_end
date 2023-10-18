@@ -24,5 +24,6 @@ urlpatterns = [
     path('auth/', include('users.urls', namespace='user')),  # 'users'라는 네임스페이스 
     path('recommendation/', include('recommendation_app.urls')),
     path('cycles/', include('cycles.urls')),
+    path('stockapp/', include('stockapp.urls')),
 
 ]
