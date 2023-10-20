@@ -7,7 +7,10 @@ const LineChart = () => {
     useEffect(() => {
         if (chartContainerRef.current) {
             // 차트를 생성하고 컨테이너에 연결
-            const chart = createChart(chartContainerRef.current, { width: 400, height: 300 });
+            const chart = createChart(chartContainerRef.current, { 
+                width: 400, 
+                height: 300
+            });
             const lineSeries = chart.addLineSeries();
 
             lineSeries.setData([
