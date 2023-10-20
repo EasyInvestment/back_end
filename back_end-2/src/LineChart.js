@@ -1,32 +1,41 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
 
 const LineChart = () => {
     const chartContainerRef = useRef(null);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        if (chartContainerRef.current) {
-            // 차트를 생성하고 컨테이너에 연결
+        fetch('http://127.0.0.1:8000/stockapp/monitor/')
+            .then(response => {
+                console.log('Server Response:', response);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const formattedData = data.map(item => ({
+                    time: item.date, 
+                    value: item.close 
+                }));
+                setData(formattedData);
+            })
+            .catch(error => {
+                console.error('Fetch error: ', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (chartContainerRef.current && data.length > 0) {
             const chart = createChart(chartContainerRef.current, { 
                 width: 400, 
                 height: 300
             });
             const lineSeries = chart.addLineSeries();
-
-            lineSeries.setData([
-                { time: '2019-04-11', value: 80.01 },
-                { time: '2019-04-12', value: 96.63 },
-                { time: '2019-04-13', value: 76.64 },
-                { time: '2019-04-14', value: 81.89 },
-                { time: '2019-04-15', value: 74.43 },
-                { time: '2019-04-16', value: 80.01 },
-                { time: '2019-04-17', value: 96.63 },
-                { time: '2019-04-18', value: 76.64 },
-                { time: '2019-04-19', value: 81.89 },
-                { time: '2019-04-20', value: 74.43 },
-            ]);
+            lineSeries.setData(data);
         }
-    }, []);
+    }, [data]);
 
     return <div ref={chartContainerRef}></div>;
 };
