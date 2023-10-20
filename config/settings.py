@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'recommendation_app',
     'cycles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
