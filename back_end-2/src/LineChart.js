@@ -4,6 +4,8 @@ import { createChart } from 'lightweight-charts';
 const LineChart = () => {
     const chartContainerRef = useRef(null);
     const [data, setData] = useState([]);
+    const [chartInitialized, setChartInitialized] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/stockapp/monitor/')
@@ -14,11 +16,22 @@ const LineChart = () => {
                 }
                 return response.json();
             })
-            .then(data => {
-                const formattedData = data.map(item => ({
-                    time: item.date, 
-                    value: item.close 
-                }));
+            .catch(error => {
+                console.error('Fetch error: ', error);
+                setError(error.message);
+            })
+            .then(dataObj => {
+                const actualData = dataObj.data || [];
+                console.log("Actual array data:", actualData);
+
+                const formattedData = actualData
+                    .filter(item => item && typeof item.datetime === 'string' && typeof item.close === 'number')
+                    .map(item => ({
+                        time: item.datetime.split(' ')[0],
+                        value: item.close
+                    }));
+
+
                 setData(formattedData);
             })
             .catch(error => {
@@ -27,17 +40,25 @@ const LineChart = () => {
     }, []);
 
     useEffect(() => {
-        if (chartContainerRef.current && data.length > 0) {
-            const chart = createChart(chartContainerRef.current, { 
-                width: 400, 
+        if (chartContainerRef.current && data.length > 0 && !chartInitialized) {
+            console.log('Initializing chart...');
+            const chart = createChart(chartContainerRef.current, {
+                width: 400,
                 height: 300
             });
             const lineSeries = chart.addLineSeries();
             lineSeries.setData(data);
+            setChartInitialized(true);
+            console.log('Chart initialized and data set!');
         }
-    }, [data]);
+    }, [data, chartInitialized]);
 
-    return <div ref={chartContainerRef}></div>;
+    return (
+        <div ref={chartContainerRef} style={{ width: '400px', height: '300px' }}>
+        {data.length === 0 && !error && <p>Loading data...</p>}
+        {error && <p>Error: {error}</p>}
+    </div>
+    );
 };
 
 export default LineChart;
