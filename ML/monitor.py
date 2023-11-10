@@ -1,5 +1,5 @@
 # from StockDataLoad import FinanceData
-from GetData import dataAll
+from .GetData import dataAll
 from Network import ensembleModel
 from dataIndicator import *
 from sklearn.preprocessing import StandardScaler

@@ -1,6 +1,14 @@
-from monitor import monitor
+from ML.monitor import monitor
 import pandas as pd
-from GetData import getTableName
+from ML.GetData import getTableName
+
+import os
+
+# main.py의 현재 위치를 기준으로 상대 경로를 설정합니다.
+current_dir = os.path.dirname(__file__)
+data_path = os.path.join(current_dir, '..', 'ML', 'cate.csv')
+cate = pd.read_csv(data_path)
+
 def main():
     # offset에 데이터주면 예측값 반환
     cate = pd.read_csv("cate.csv",index_col=0).iloc[:10]
@@ -26,3 +34,5 @@ def main():
     # return df.iloc[-4:].to_numpy().tolist()
 
 main()
+
+
