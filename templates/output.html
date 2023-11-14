@@ -6,6 +6,54 @@
     <title>맞춤서비스 결과</title>
     <link rel="stylesheet" href="/static/css/output.css">
 </head>
+
+<style>
+    h1 {
+        position: relative;
+        top: 30px;
+        left: 5%;
+        color: white;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 28px; /* 127.273% */
+        display: flex;
+    }
+    
+    .category-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+    }
+    .category-box {
+        width: 127px;
+        height: 127px;
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        color: black; 
+        background-color: white;
+    }
+
+    .category-box span {
+    color: black; 
+    font-family: 'Arial', sans-serif; 
+    font-size: 12px;
+    text-align: center; 
+    margin-top: 10px; 
+    width: 90%; 
+    }
+
+
+    
+    </style>
+    
+
 <body>
     <a href="input.html">
         <img class="back" src="/static/img/backbutton.png" style="width: 90px; height: 40px;" />
@@ -14,12 +62,16 @@
 
     <!-- 여기서부터 맞춤서비스 결과를 표시합니다 -->
     <!-- output.html -->
-    <h1>추천 카테고리 결과</h1>
-    <ul>
-    {% for category in recommended_categories %}
-    <li>{{ category }}</li>
-    {% endfor %}
-    </ul>
+    <h1>산업별 카테고리 추천상품</h1>
+
+    <div class="category-container">
+        {% for category in recommended_categories %}
+        <div class="category-box">
+            <img src="../static/img/Ellipse 4.png" alt="" class="category-image">
+            <span>{{ category }}</span> 
+        </div>
+        {% endfor %}
+    </div>
 
     <!-- 필요한 결과 표시를 작성하세요 -->
 
